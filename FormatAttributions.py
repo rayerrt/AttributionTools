@@ -18,11 +18,11 @@ def formatAttributions(inputfile,mapping,outputfile):
         mcontent=fm.readlines()
         for m in mcontent:
             key=m.split(":")[0].decode("UTF-8")
-            value=m.split(":")[1].decode("UTF-8").strip(os.linesep)
+            value=m.split(":")[1].decode("UTF-8")
             if key not in mappingdict.keys():
                 mappingdict[key]=value
 
-    print mappingdict
+    print mappingdict.values()[0]
     fo=open(outputfile,"w")
     resultlist=[]
     with open(inputfile) as fi:
@@ -44,12 +44,12 @@ def formatAttributions(inputfile,mapping,outputfile):
                     tempkey=third.decode("UTF-8")
                 if tempkey in mappingdict.keys():
                         tempvalue=mappingdict[tempkey].decode("UTF-8")
-                        temp=second+" "+tempvalue+os.linesep
-                        resultlist.append(temp)
+                        temp="\""+second+"\","+tempvalue
+                        resultlist.append(temp.encode("GB2312"))
                 else:
                         print "未发现对该归属地映射:%s %s" %(second,third_new)
         resultlist.sort()
-        print resultlist
+        print resultlist[0]
         for item in resultlist:
             fo.write(item)
     fo.close()
